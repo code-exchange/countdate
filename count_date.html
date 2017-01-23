@@ -1,0 +1,93 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Count Date</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+function isleap(year) {
+    return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+}
+
+function split_yeardoy_string(s) {
+    return [s.slice(2, 5), s.slice(0, 2)];
+}
+
+function get_day_month_by_day(day, year) {
+    var months = [31, 28 + isleap(year), 31, 30,
+                  31, 30, 31, 31, 30, 31, 30, 31];
+    for (var i = 0; i < 12; i++) {
+        if (day > months[i]) {
+            day -= months[i];
+        } else {
+            return [day, i + 1];
+        }
+    }
+}
+
+function get_input() {
+    return document.getElementById("1").value;
+}
+
+function set_output(value) {
+    document.getElementById("2").value = value;
+}
+
+function set_log(input, output) {
+    var element = document.getElementById("3");
+    element.innerHTML += input + " -> " + output + "<br/>\n";
+}
+
+function on_click() {
+    var input = get_input();
+
+    if (input.length < 3 || input.length > 5) {
+        alert("Введено неправильно (вводи от 3 до 5 цифр): " + input);
+        return;
+    }
+
+    var doy, year;
+    [doy, year] = split_yeardoy_string(input);
+    year = "20" + year;
+
+    if (/^0/.test(doy)) {
+        alert("Введено неправильно (день не может начинаться с нуля): " + doy);
+        return;
+    } else if (doy > 365 + isleap(year)) {
+        alert("Введено неправильно (день выходит за пределы года): " + doy);
+        return;
+    }
+
+    var day, month;
+    [day, month] = get_day_month_by_day(doy, year);
+
+    var output = [day, month, year];
+    set_output(output);
+
+    set_log(input, output);
+}
+
+</script>
+
+<p>
+Переводит дату в виде YYDDD (YY - год, DDD - день года) в число, месяц, год.
+</p>
+
+<p>
+Пример: 16127 -> 6,5,2016
+</p>
+
+<form action="javascript:on_click()">
+  Ввод:<input id="1">
+  Вывод:<input id="2">
+  <input type="submit" value="Ok">
+  <input type="reset" value="Clear">
+</form>
+
+История:
+<div id="3"></div>
+
+</body>
+</html>
