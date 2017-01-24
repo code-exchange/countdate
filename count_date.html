@@ -67,7 +67,8 @@ function on_click() {
     var day, month;
     [day, month] = get_day_month_by_day(doy, year);
 
-    var output = [day, month, year];
+    var output;
+    output = [day, month, year];
     set_output(output);
 
     set_log(input, output);
