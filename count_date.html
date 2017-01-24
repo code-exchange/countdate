@@ -35,7 +35,7 @@ function set_output(value) {
     document.getElementById("2").value = value;
 }
 
-function set_log(input, output) {
+function append_to_log(input, output) {
     var element = document.getElementById("3");
     element.innerHTML += input + " -> " + output + "<br/>\n";
 }
@@ -70,8 +70,7 @@ function on_click() {
     var output;
     output = [day, month, year];
     set_output(output);
-
-    set_log(input, output);
+    append_to_log(input, output);
 }
 
 </script>
