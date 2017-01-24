@@ -43,6 +43,10 @@ function set_log(input, output) {
 function on_click() {
     var input = get_input();
 
+    if (!/^\d+$/.test(input)) {
+        alert("Введено неправильно (вводи цифры): " + input);
+        return;
+    }
     if (input.length < 3 || input.length > 5) {
         alert("Введено неправильно (вводи от 3 до 5 цифр): " + input);
         return;
